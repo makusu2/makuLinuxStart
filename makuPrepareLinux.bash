@@ -11,6 +11,7 @@ log ()
 	date=`date '+%Y-%m-%d %H:%M:%S'`
 	logMessage="$1"
 	sudo echo "$date $logMessage" >> log
+	echo "    $logMessage"
 }
 
 if [ $EUID != 0 ]; then

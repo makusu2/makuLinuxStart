@@ -11,7 +11,16 @@ log ()
 	date=`date '+%Y-%m-%d %H:%M:%S'`
 	logMessage="$1"
 	sudo echo "$date $logMessage" >> log
-	echo "    $logMessage"
+	echo " $logMessage"
+}
+
+makuInstall()
+{
+	longLog = /var/log/makuPrepareLinuxLongLog.log
+	programName = "$1"
+	date=`date '+%Y-%m-%d %H:%M:%S'`
+	echo "     Installing $1 at $date:" >> longLog
+	sudo apt install -y programName >> longLog
 }
 
 if [ $EUID != 0 ]; then
@@ -34,7 +43,7 @@ git config --global user.email "makusu2@gmail.com"
 log "Git properties set!"
 
 log "Installing Vim..."
-sudo apt install -y vim
+makuInstall vim
 #sudo update-alternatives --config editor
 	#Dunno why this is a thing
 log "Installed Vim!"
@@ -47,7 +56,8 @@ log "Installed the ultimate VimRC!"
 log "Installing Sublime Text..."
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
 echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
-sudo apt update && sudo apt install sublime-text
+sudo apt update
+makuInstall sublime-text
 log "Installed Sublime Text!"
 
 log "Setting Sublime Text as default editor..."
@@ -56,17 +66,17 @@ sed -i 's/gedit/sublime_text/g' /usr/share/applications/defaults.list
 log "Set Sublime Text as default editor!"
 
 log "Installing VLC..."
-sudo apt install -y vlc
+makuInstall vlc
 log "Installed VLC!"
 
 log "Installing Chromium..."
-sudo apt install -y chromium-browser
+makuInstall chromium-browser
 log "Installed Chromium!"
 
 log "Installing inxi..."
 sudo add-apt-repository -y ppa:unit193/inxi
 sudo apt update
-sudo apt install -y inxi
+makuInstall inxi
 log "Installed inxi"
 
 log "Disabling terminal case sensitivity..."
@@ -78,8 +88,8 @@ echo 'set completion-ignore-case On' >> ~/.inputrc
 log "Disabled terminal case sensitivity!"
 
 log "Installing compizConfig..."
-sudo apt install -y compizconfig-settings-manager
-sudo apt install -y compiz-plugins
+makuInstall compizconfig-settings-manager
+makuInstall compiz-plugins
 log "Installed compizConfig! You still need to import your profile."
 
 log "Importing compizConfig settings..."
@@ -95,7 +105,7 @@ sudo echo 'alias snip="gnome-screenshot -ac"' >> ~/.bash_aliases
 log "Added aliases"
 
 log "Adding numlockx and enabling numlock on boot..."
-sudo apt install -y numlockx
+makuInstall numlockx
 sudo sed -i 's|^exit 0.*$|# Numlock enable\n[ -x /usr/bin/numlockx ] \&\& numlockx on\n\nexit 0|' /etc/rc.local
 log "Added numlockx and enabled numlock on boot!"
 

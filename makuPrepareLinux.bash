@@ -28,11 +28,10 @@ sudo apt-get upgrade -y
 log "Attempting updates..."
 sudo apt-get update -y
 
-log "Installing Git..."
-sudo apt install -y git
+log "Setting Git properties..."
 git config --global user.name "Maku"
 git config --global user.email "makusu2@gmail.com"
-log "Installed Git!"
+log "Git properties set!"
 
 log "Installing Vim..."
 sudo apt install -y vim
@@ -65,9 +64,9 @@ sudo apt install -y chromium-browser
 log "Installed Chromium!"
 
 log "Installing inxi..."
-sudo add-apt-repository ppa:unit193/inxi
+sudo add-apt-repository -y ppa:unit193/inxi
 sudo apt update
-sudo apt-get install inxi
+sudo apt install -y inxi
 log "Installed inxi"
 
 log "Disabling terminal case sensitivity..."
@@ -84,12 +83,12 @@ sudo apt install -y compiz-plugins
 log "Installed compizConfig! You still need to import your profile."
 
 log "Importing compizConfig settings..."
-python /tmp/makuLinuxStartTemp/importCompiz.py
+python /tmp/makuLinuxStartTemp/importCompiz.py '/tmp/makuLinuxStartTemp/compizSettings.profile'
 log "Imported compizConfig settings!"
 
 log "Cleaninig up launcher..."
 sudo gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']"
-log "Cleaned up launcher"
+log "Cleaned up launcher! (Reboot necessary)"
 
 log "Adding aliases..."
 sudo echo 'alias snip="gnome-screenshot -ac"' >> ~/.bash_aliases

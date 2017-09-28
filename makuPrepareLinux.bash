@@ -2,7 +2,8 @@
 #Steven
 #Maku
 #If permission denied, do chmod +x makuPrepareLinux.bash
-#Todo: Numlock, make output quieter, add snip alias, remove stuff from launcher
+#Todo: Make output quieter
+#Requirements: Git installed
 log ()
 {
 	log=/var/log/makuPrepareLinuxLog.log
@@ -62,6 +63,12 @@ log "Installing Chromium..."
 sudo apt install -y chromium-browser
 log "Installed Chromium!"
 
+log "Installing inxi..."
+sudo add-apt-repository ppa:unit193/inxi
+sudo apt update
+sudo apt-get install inxi
+log "Installed inxi"
+
 log "Disabling terminal case sensitivity..."
 # If ~./inputrc doesn't exist yet, first include the original /etc/inputrc so we don't override it
 if [ ! -a ~/.inputrc ]; then echo '$include /etc/inputrc' > ~/.inputrc; fi
@@ -70,12 +77,14 @@ echo 'set completion-ignore-case On' >> ~/.inputrc
 	#Source: https://askubuntu.com/questions/87061/can-i-make-tab-auto-completion-case-insensitive-in-the-terminal
 log "Disabled terminal case sensitivity!"
 
-log "Ending here, but I plan on adding more stuff"
-
 log "Installing compizConfig..."
 sudo apt install -y compizconfig-settings-manager
 sudo apt install -y compiz-plugins
 log "Installed compizConfig! You still need to import your profile."
+
+log "Importing compizConfig settings..."
+python /tmp/makuLinuxStartTemp/importCompiz.py
+log "Imported compizConfig settings!"
 
 log "Cleaninig up launcher..."
 sudo gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']"
@@ -84,3 +93,10 @@ log "Cleaned up launcher"
 log "Adding aliases..."
 sudo echo 'alias snip="gnome-screenshot -ac"' >> ~/.bash_aliases
 log "Added aliases"
+
+log "Adding numlockx and enabling numlock on boot..."
+sudo apt install -y numlockx
+sudo sed -i 's|^exit 0.*$|# Numlock enable\n[ -x /usr/bin/numlockx ] \&\& numlockx on\n\nexit 0|' /etc/rc.local
+log "Added numlockx and enabled numlock on boot!"
+
+log "Ending here, but I plan on adding more stuff"

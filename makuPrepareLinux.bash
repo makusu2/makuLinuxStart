@@ -20,7 +20,7 @@ makuInstall()
 	programName = "$1"
 	date=`date '+%Y-%m-%d %H:%M:%S'`
 	echo "     Installing $1 at $date:" >> longLog
-	sudo apt install -y programName >> longLog
+	sudo apt install -y $programName >> longLog
 }
 
 if [ $EUID != 0 ]; then

@@ -21,6 +21,12 @@ makuInstall()
 	date=`date '+%Y-%m-%d %H:%M:%S'`
 	echo "     Installing $1 at $date:" >> longLog
 	sudo apt install -y $programName >> longLog
+	while [ ! type $programName > /dev/null ]
+	do
+		log "$programName tried installing but failed. Retrying."
+		echo "Retrying installation " >> longLog
+		sudo apt install -y $programName >> longLog
+	done
 }
 
 if [ $EUID != 0 ]; then

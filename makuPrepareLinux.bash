@@ -2,7 +2,7 @@
 #Steven
 #Maku
 #If permission denied, do chmod +x makuPrepareLinux.bash
-#Todo: Make output quieter
+#Todo: Make output quieter, use aptdcon
 #Requirements: Git installed
 log ()
 {
@@ -16,17 +16,38 @@ log ()
 
 makuInstall()
 {
-	longLog = /var/log/makuPrepareLinuxLongLog.log
-	programName = "$1"
-	date=`date '+%Y-%m-%d %H:%M:%S'`
-	echo "     Installing $1 at $date:" >> longLog
-	sudo apt-get install -y $programName >> longLog
-	while [ ! type $programName > /dev/null ]
-	do
-		log "$programName tried installing but failed. Retrying."
-		echo "Retrying installation " >> longLog
-		sudo apt-get install -y $programName >> longLog
-	done
+	# longLog = /var/log/makuPrepareLinuxLongLog.log
+	# programName = "$1"
+	# date=`date '+%Y-%m-%d %H:%M:%S'`
+	# sudo echo "     Installing $1 at $date:" >> longLog
+	# sudo apt-get install -y $programName >> longLog
+	# while [ ! type $programName > /dev/null ]
+	# do
+	# log "$programName tried installing but failed. Retrying."
+	# sudo echo "Retrying installation " >> longLog
+	# sudo apt-get install -y $programName >> longLog
+	# done
+	i=0
+	tput sc
+	while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do
+		case $(($i % 4)) in
+			0 ) j="-" ;;
+			1 ) j="\\" ;;
+			2 ) j="|" ;;
+			3 ) j="/" ;;
+		esac
+		tput rc
+		echo -en "\r[$j] Waiting for other software managers to finish..." 
+		sleep 0.5
+		((i=i+1))
+	done 
+
+	/usr/bin/apt-get "$1"
+	#Source: https://askubuntu.com/questions/132059/how-to-make-a-package-manager-wait-if-another-instance-of-apt-is-running
+}
+makuLongInstall ()
+{
+	programs = "vim sublime-text vlc chromium-browser inxi"
 }
 
 if [ $EUID != 0 ]; then

@@ -30,7 +30,7 @@ makuInstall()
 	i=0
 	tput sc
 	while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do
-		log "$programName tried installing but lock issue. Retrying."
+		#log "$programName tried installing but lock issue. Retrying."
 		case $(($i % 4)) in
 			0 ) j="-" ;;
 			1 ) j="\\" ;;
@@ -84,7 +84,7 @@ makuInstall vim
 log "Installed Vim!"
 
 log "Installing the ultimate VimRC..."
-git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime >> $longLog
+git-clone -q --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime >> $longLog
 sh ~/.vim_runtime/install_awesome_vimrc.sh >> $longLog
 log "Installed the ultimate VimRC!"
 

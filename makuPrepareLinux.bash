@@ -10,7 +10,7 @@ log ()
 	sudo touch $log
 	date=`date '+%Y-%m-%d %H:%M:%S'`
 	logMessage="$1"
-	sudo echo "$date $logMessage" >> log
+	sudo echo "$date $logMessage" >> $log
 	echo " $logMessage"
 }
 
@@ -19,7 +19,7 @@ makuInstall()
 	longLog=/var/log/makuPrepareLinuxLongLog.log
 	programName="$1"
 	date=`date '+%Y-%m-%d %H:%M:%S'`
-	sudo echo "     Installing $1 at $date:" >> longLog
+	sudo echo "     Installing $1 at $date:" >> $longLog
 	# sudo apt-get install -y $programName >> longLog
 	# while [ ! type $programName > /dev/null ]
 	# do
@@ -42,8 +42,8 @@ makuInstall()
 		sleep 0.5
 		((i=i+1))
 	done 
-	echo "No longer locked" >> longLog
-	/usr/bin/apt-get -y "$programName" >> longLog
+	echo "No longer locked" >> $longLog
+	/usr/bin/apt-get -y "$programName" >> $longLog
 	#Source: https://askubuntu.com/questions/132059/how-to-make-a-package-manager-wait-if-another-instance-of-apt-is-running
 }
 makuLongInstall ()

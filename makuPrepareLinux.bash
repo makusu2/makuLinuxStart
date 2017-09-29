@@ -62,16 +62,19 @@ fi
 
 set -e
 	#Making code exit on error
+	
+log=/var/log/makuPrepareLinuxLog.log
+longLog=/var/log/makuPrepareLinuxLongLog.log
 
 log "User is root"
 log "Checking for updates..."
-sudo apt-get upgrade -y
+sudo apt-get upgrade -y >> $longLog
 log "Attempting updates..."
-sudo apt-get update -y
+sudo apt-get update -y >> $longLog
 
 log "Setting Git properties..."
-git config --global user.name "Maku"
-git config --global user.email "makusu2@gmail.com"
+git config --global user.name "Maku" >> $longLog
+git config --global user.email "makusu2@gmail.com" >> $longLog
 log "Git properties set!"
 
 log "Installing Vim..."
@@ -81,19 +84,19 @@ makuInstall vim
 log "Installed Vim!"
 
 log "Installing the ultimate VimRC..."
-git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
-sh ~/.vim_runtime/install_awesome_vimrc.sh
+git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime >> $longLog
+sh ~/.vim_runtime/install_awesome_vimrc.sh >> $longLog
 log "Installed the ultimate VimRC!"
 
 log "Installing Sublime Text..."
-wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
-echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
-sudo apt update
+wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add - >> $longLog
+echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list >> $longLog
+sudo apt update >> $longLog
 makuInstall sublime-text
 log "Installed Sublime Text!"
 
 log "Setting Sublime Text as default editor..."
-sed -i 's/gedit/sublime_text/g' /usr/share/applications/defaults.list
+sed -i 's/gedit/sublime_text/g' /usr/share/applications/defaults.list >> $longLog
 	#Replacing all instances of "gedit" with "sublime_text" in the defaults file
 log "Set Sublime Text as default editor!"
 
@@ -106,8 +109,8 @@ makuInstall chromium-browser
 log "Installed Chromium!"
 
 log "Installing inxi..."
-sudo add-apt-repository -y ppa:unit193/inxi
-sudo apt update
+sudo add-apt-repository -y ppa:unit193/inxi >> $longLog
+sudo apt update >> $longLog
 makuInstall inxi
 log "Installed inxi"
 
@@ -129,7 +132,7 @@ python /tmp/makuLinuxStartTemp/importCompiz.py '/tmp/makuLinuxStartTemp/compizSe
 log "Imported compizConfig settings!"
 
 log "Cleaninig up launcher..."
-sudo gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']"
+sudo gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']" >> $longLog
 log "Cleaned up launcher! (Reboot necessary)"
 
 log "Adding aliases..."
@@ -138,7 +141,14 @@ log "Added aliases"
 
 log "Adding numlockx and enabling numlock on boot..."
 makuInstall numlockx
-sudo sed -i 's|^exit 0.*$|# Numlock enable\n[ -x /usr/bin/numlockx ] \&\& numlockx on\n\nexit 0|' /etc/rc.local
+sudo sed -i 's|^exit 0.*$|# Numlock enable\n[ -x /usr/bin/numlockx ] \&\& numlockx on\n\nexit 0|' /etc/rc.local >> $longLog
 log "Added numlockx and enabled numlock on boot!"
 
 log "Ending here, but I plan on adding more stuff"
+
+log "Errors:"
+egrep $longLog "rror"
+egrep $log "rror"
+egrep $longLog "arning"
+egrep $log "arning"
+log "End errors"

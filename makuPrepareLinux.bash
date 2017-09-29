@@ -16,43 +16,11 @@ log ()
 
 makuInstall()
 {
-	sudo bash -c 'makuInstallSudo $1'
-}
-makuInstallSudo ()
-{
 	longLog=/var/tmp/log/makuPrepareLinuxLongLog.log
 	programName="$1"
 	date=`date '+%Y-%m-%d %H:%M:%S'`
 	echo "     Installing $1 at $date:" >> $longLog
-	# sudo apt-get install -y $programName >> longLog
-	# while [ ! type $programName > /dev/null ]
-	# do
-	# log "$programName tried installing but failed. Retrying."
-	# sudo echo "Retrying installation " >> longLog
-	# sudo apt-get install -y $programName >> longLog
-	# done
-	i=0
-	tput sc
-	while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do
-		#log "$programName tried installing but lock issue. Retrying."
-		case $(($i % 4)) in
-			0 ) j="-" ;;
-			1 ) j="\\" ;;
-			2 ) j="|" ;;
-			3 ) j="/" ;;
-		esac
-		tput rc
-		echo -en "\r[$j] Waiting for other software managers to finish..." 
-		sleep 0.5
-		((i=i+1))
-	done
-	echo "No longer locked" >> $longLog
-	sudo /usr/bin/apt-get install -y "$programName" >> $longLog
-	#Source: https://askubuntu.com/questions/132059/how-to-make-a-package-manager-wait-if-another-instance-of-apt-is-running
-}
-makuLongInstall ()
-{
-	programs = "vim sublime-text vlc chromium-browser inxi"
+	sudo apt-get install -y "$programName" >> $longLog
 }
 
  if [ $EUID == 0 ]; then
@@ -74,8 +42,12 @@ longLog=/var/tmp/log/makuPrepareLinuxLongLog.log
 touch $log
 touch $longLog
 
-export -f makuInstallSudo
-#log "User is root"
+log "Making apt-get wait for lock..."
+sudo mv /tmp/makuLinuxStartTemp/apt-get.bash /usr/local/sbin/apt-get
+sudo chmod +x /usr/local/sbin/apt-get
+log "Made apt-get wait for lock"
+
+
 log "Checking for updates..."
 sudo apt-get upgrade -y >> $longLog
 log "Attempting updates..."

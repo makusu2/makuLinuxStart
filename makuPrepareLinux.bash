@@ -100,7 +100,7 @@ makuInstall sublime-text
 log "Installed Sublime Text!"
 
 log "Setting Sublime Text as default editor..."
-sed -i 's/gedit/sublime_text/g' /usr/share/applications/defaults.list >> $longLog
+sudo sed -i 's/gedit/sublime_text/g' /usr/share/applications/defaults.list >> $longLog
 	#Replacing all instances of "gedit" with "sublime_text" in the defaults file
 log "Set Sublime Text as default editor!"
 

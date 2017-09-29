@@ -82,7 +82,7 @@ git config --global user.email "makusu2@gmail.com" >> $longLog
 log "Git properties set!"
 
 log "Installing Vim..."
-makuInstall vim
+sudo makuInstall vim
 #sudo update-alternatives --config editor
 	#Dunno why this is a thing
 log "Installed Vim!"
@@ -96,7 +96,7 @@ log "Installing Sublime Text..."
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
 echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list >> $longLog
 sudo apt-get update >> $longLog
-makuInstall sublime-text
+sudo makuInstall sublime-text
 log "Installed Sublime Text!"
 
 log "Setting Sublime Text as default editor..."
@@ -105,17 +105,17 @@ sed -i 's/gedit/sublime_text/g' /usr/share/applications/defaults.list >> $longLo
 log "Set Sublime Text as default editor!"
 
 log "Installing VLC..."
-makuInstall vlc
+sudo makuInstall vlc
 log "Installed VLC!"
 
 log "Installing Chromium..."
-makuInstall chromium-browser
+sudo makuInstall chromium-browser
 log "Installed Chromium!"
 
 log "Installing inxi..."
 sudo add-apt-repository -y ppa:unit193/inxi >> $longLog
 sudo apt-get update >> $longLog
-makuInstall inxi
+sudo makuInstall inxi
 log "Installed inxi"
 
 log "Disabling terminal case sensitivity..."
@@ -127,8 +127,8 @@ echo 'set completion-ignore-case On' >> ~/.inputrc
 log "Disabled terminal case sensitivity!"
 
 log "Installing compizConfig..."
-makuInstall compizconfig-settings-manager
-makuInstall compiz-plugins
+sudo makuInstall compizconfig-settings-manager
+sudo makuInstall compiz-plugins
 log "Installed compizConfig! You still need to import your profile."
 
 log "Importing compizConfig settings..."
@@ -147,7 +147,7 @@ sudo echo 'alias snip="gnome-screenshot -ac"' >> ~/.bash_aliases
 log "Added aliases"
 
 log "Adding numlockx and enabling numlock on boot..."
-makuInstall numlockx
+sudo makuInstall numlockx
 sudo sed -i 's|^exit 0.*$|# Numlock enable\n[ -x /usr/bin/numlockx ] \&\& numlockx on\n\nexit 0|' /etc/rc.local >> $longLog
 log "Added numlockx and enabled numlock on boot!"
 

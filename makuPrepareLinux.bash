@@ -128,13 +128,13 @@ makuInstall compiz-plugins
 log "Installed compizConfig! You still need to import your profile."
 
 log "Importing compizConfig settings..."
-sudo $USER python /tmp/makuLinuxStartTemp/importCompiz.py '/tmp/makuLinuxStartTemp/compizSettings.profile'
+sudo -u $USER python /tmp/makuLinuxStartTemp/importCompiz.py '/tmp/makuLinuxStartTemp/compizSettings.profile'
 	#So, it worked when I used this code alone, but it's not working in the script...
 log "Imported compizConfig settings!"
 
 log "Cleaning up launcher..."
-sudo $USER gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']" >> $longLog
-sudo $USER whoami
+sudo -u $USER gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']" >> $longLog
+sudo -u $USER whoami
 log "Cleaned up launcher! (Reboot necessary)"
 
 log "Adding aliases..."

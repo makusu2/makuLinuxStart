@@ -16,7 +16,7 @@ log ()
 
 makuInstall()
 {
-	su -c 'makuInstallSudo $1'
+	sudo bash -c 'makuInstallSudo $1'
 }
 makuInstallSudo ()
 {

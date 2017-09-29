@@ -16,8 +16,8 @@ log ()
 
 makuInstall()
 {
-	longLog = /var/log/makuPrepareLinuxLongLog.log
-	programName = "$1"
+	longLog=/var/log/makuPrepareLinuxLongLog.log
+	programName="$1"
 	date=`date '+%Y-%m-%d %H:%M:%S'`
 	sudo echo "     Installing $1 at $date:" >> longLog
 	# sudo apt-get install -y $programName >> longLog

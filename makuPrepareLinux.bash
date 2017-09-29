@@ -16,7 +16,7 @@ log ()
 
 makuInstall()
 {
-	longLog=/var/tmplog/makuPrepareLinuxLongLog.log
+	longLog=/var/tmp/log/makuPrepareLinuxLongLog.log
 	programName="$1"
 	date=`date '+%Y-%m-%d %H:%M:%S'`
 	echo "     Installing $1 at $date:" >> $longLog

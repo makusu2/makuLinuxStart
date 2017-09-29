@@ -74,7 +74,7 @@ longLog=/var/tmp/log/makuPrepareLinuxLongLog.log
 touch $log
 touch $longLog
 
-export -f makuInstall
+export -f makuInstallSudo
 #log "User is root"
 log "Checking for updates..."
 sudo apt-get upgrade -y >> $longLog

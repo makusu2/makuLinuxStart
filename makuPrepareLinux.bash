@@ -16,6 +16,10 @@ log ()
 
 makuInstall()
 {
+	su -c makuInstallSudo $1
+}
+makuInstallSudo ()
+{
 	longLog=/var/tmp/log/makuPrepareLinuxLongLog.log
 	programName="$1"
 	date=`date '+%Y-%m-%d %H:%M:%S'`
@@ -29,7 +33,7 @@ makuInstall()
 	# done
 	i=0
 	tput sc
-	while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do
+	while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do
 		#log "$programName tried installing but lock issue. Retrying."
 		case $(($i % 4)) in
 			0 ) j="-" ;;
@@ -41,7 +45,7 @@ makuInstall()
 		echo -en "\r[$j] Waiting for other software managers to finish..." 
 		sleep 0.5
 		((i=i+1))
-	done 
+	done
 	echo "No longer locked" >> $longLog
 	sudo /usr/bin/apt-get install -y "$programName" >> $longLog
 	#Source: https://askubuntu.com/questions/132059/how-to-make-a-package-manager-wait-if-another-instance-of-apt-is-running
@@ -70,7 +74,8 @@ longLog=/var/tmp/log/makuPrepareLinuxLongLog.log
 touch $log
 touch $longLog
 
-log "User is root"
+export -f makuInstall
+#log "User is root"
 log "Checking for updates..."
 sudo apt-get upgrade -y >> $longLog
 log "Attempting updates..."

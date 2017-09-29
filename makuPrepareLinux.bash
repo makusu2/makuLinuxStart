@@ -128,10 +128,13 @@ makuInstall compiz-plugins
 log "Installed compizConfig! You still need to import your profile."
 
 log "Importing compizConfig settings..."
+sleep 0.5
+	#Maybe it needs to realize that compiz is installed?
 python /tmp/makuLinuxStartTemp/importCompiz.py '/tmp/makuLinuxStartTemp/compizSettings.profile'
+	#So, it worked when I used this code alone, but it's not working in the script...
 log "Imported compizConfig settings!"
 
-log "Cleaninig up launcher..."
+log "Cleaning up launcher..."
 sudo gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']" >> $longLog
 log "Cleaned up launcher! (Reboot necessary)"
 
@@ -146,7 +149,7 @@ log "Added numlockx and enabled numlock on boot!"
 
 log "Ending here, but I plan on adding more stuff"
 
-log "Errors:"
+log "Errors:" #It's not continuing though... uh.
 egrep -i "error" $longLog
 egrep -i "error" $log
 egrep -i "warning" $longLog

@@ -58,10 +58,14 @@ git config --global user.name "Maku" >> $longLog
 git config --global user.email "makusu2@gmail.com" >> $longLog
 log "Git properties set!"
 
+
+
+
+
+log "     Now starting installations"
+
 log "Installing Vim..."
 makuInstall vim
-#sudo update-alternatives --config editor
-	#Dunno why this is a thing
 log "Installed Vim!"
 
 log "Installing the ultimate VimRC..."
@@ -96,6 +100,30 @@ sudo apt-get update >> $longLog
 makuInstall inxi
 log "Installed inxi"
 
+log "Installing compizConfig..."
+makuInstall compizconfig-settings-manager
+makuInstall compiz-plugins
+log "Installed compizConfig! You still need to import your profile."
+
+log "Installing gfortran..."
+makuInstall gfortran
+log "Installed gfortran!"
+
+log "Installing gimp..."
+makuInstall gimp
+log "Installed gimp!"
+
+log "Installing Audacity..."
+makuInstall audacity
+log "Installed Audacity!"
+
+log "     Installations complete"
+
+
+
+
+
+
 log "Disabling terminal case sensitivity..."
 # If ~./inputrc doesn't exist yet, first include the original /etc/inputrc so we don't override it
 if [ ! -a ~/.inputrc ]; then echo '$include /etc/inputrc' > ~/.inputrc; fi
@@ -103,11 +131,6 @@ if [ ! -a ~/.inputrc ]; then echo '$include /etc/inputrc' > ~/.inputrc; fi
 echo 'set completion-ignore-case On' >> ~/.inputrc
 	#Source: https://askubuntu.com/questions/87061/can-i-make-tab-auto-completion-case-insensitive-in-the-terminal
 log "Disabled terminal case sensitivity!"
-
-log "Installing compizConfig..."
-makuInstall compizconfig-settings-manager
-makuInstall compiz-plugins
-log "Installed compizConfig! You still need to import your profile."
 
 
 log "Cleaning up launcher..."
@@ -134,3 +157,5 @@ sudo apt-get upgrade -y >> $longLog
 log "Performed updates and upgrades again"
 
 log "Ending here, but I plan on adding more stuff"
+
+sudo apt-get autoremove -y >> $longLog

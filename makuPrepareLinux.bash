@@ -135,6 +135,7 @@ log "Imported compizConfig settings!"
 log "Cleaning up launcher..."
 sudo -u $USER gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']" >> $longLog
 sudo -u $USER whoami
+echo $USER
 log "Cleaned up launcher! (Reboot necessary)"
 
 log "Adding aliases..."

@@ -90,7 +90,8 @@ makuInstall chromium-browser
 log "Installed Chromium!"
 
 log "Installing inxi..."
-sudo add-apt-repository -y ppa:unit193/inxi >> $longLog
+sudo add-apt-repository -y ppa:unit193/inxi > /dev/null 2>&1
+	#The 2>&1 thing means "if it's an error, DO print to terminal"
 sudo apt-get update >> $longLog
 makuInstall inxi
 log "Installed inxi"
@@ -110,9 +111,7 @@ log "Installed compizConfig! You still need to import your profile."
 
 
 log "Cleaning up launcher..."
-sudo -u $USER gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']" >> $longLog
-sudo -u $USER whoami
-echo $USER
+gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']" >> $longLog
 log "Cleaned up launcher! (Reboot necessary)"
 
 log "Adding aliases..."
@@ -125,7 +124,7 @@ sudo sed -i 's|^exit 0.*$|# Numlock enable\n[ -x /usr/bin/numlockx ] \&\& numloc
 log "Added numlockx and enabled numlock on boot!"
 
 log "Importing compizConfig settings..."
-sudo -u $USER python /tmp/makuLinuxStartTemp/importCompiz.py '/tmp/makuLinuxStartTemp/compizSettings.profile'
+python /tmp/makuLinuxStartTemp/importCompiz.py '/tmp/makuLinuxStartTemp/compizSettings.profile'
 	#So, it worked when I used this code alone, but it's not working in the script...
 log "Imported compizConfig settings!"
 

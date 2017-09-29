@@ -43,7 +43,7 @@ makuInstall()
 		((i=i+1))
 	done 
 	echo "No longer locked" >> $longLog
-	/usr/bin/apt-get -y "$programName" >> $longLog
+	/usr/bin/apt-get install -y "$programName" >> $longLog
 	#Source: https://askubuntu.com/questions/132059/how-to-make-a-package-manager-wait-if-another-instance-of-apt-is-running
 }
 makuLongInstall ()

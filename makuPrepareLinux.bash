@@ -66,7 +66,7 @@ set -e
 	
 mkdir -p /var/tmp/log
 log=/var/tmp/log/makuPrepareLinuxLog.log
-longLog=/tmp/var/log/makuPrepareLinuxLongLog.log
+longLog=/var/tmp/log/makuPrepareLinuxLongLog.log
 touch $log
 touch $longLog
 

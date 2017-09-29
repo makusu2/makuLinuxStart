@@ -6,11 +6,11 @@
 #Requirements: Git installed
 log ()
 {
-	log=/var/log/makuPrepareLinuxLog.log
-	sudo touch $log
+	log=/var/tmp/log/makuPrepareLinuxLog.log
+	#sudo touch $log
 	date=`date '+%Y-%m-%d %H:%M:%S'`
 	logMessage="$1"
-	sudo echo "$date $logMessage" >> $log
+	echo "$date $logMessage" >> $log
 	echo " $logMessage"
 }
 
@@ -19,7 +19,7 @@ makuInstall()
 	longLog=/var/log/makuPrepareLinuxLongLog.log
 	programName="$1"
 	date=`date '+%Y-%m-%d %H:%M:%S'`
-	sudo echo "     Installing $1 at $date:" >> $longLog
+	echo "     Installing $1 at $date:" >> $longLog
 	# sudo apt-get install -y $programName >> longLog
 	# while [ ! type $programName > /dev/null ]
 	# do
@@ -64,8 +64,11 @@ fi
 set -e
 	#Making code exit on error
 	
-log=/var/log/makuPrepareLinuxLog.log
-longLog=/var/log/makuPrepareLinuxLongLog.log
+mkdir -p /var/tmp/log
+log=/var/tmp/log/makuPrepareLinuxLog.log
+longLog=/tmp/var/log/makuPrepareLinuxLongLog.log
+touch $log
+touch $longLog
 
 log "User is root"
 log "Checking for updates..."

@@ -89,9 +89,9 @@ sh ~/.vim_runtime/install_awesome_vimrc.sh >> $longLog
 log "Installed the ultimate VimRC!"
 
 log "Installing Sublime Text..."
-wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add - >> $longLog
+wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
 echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list >> $longLog
-sudo apt update >> $longLog
+sudo apt-get update >> $longLog
 makuInstall sublime-text
 log "Installed Sublime Text!"
 
@@ -110,7 +110,7 @@ log "Installed Chromium!"
 
 log "Installing inxi..."
 sudo add-apt-repository -y ppa:unit193/inxi >> $longLog
-sudo apt update >> $longLog
+sudo apt-get update >> $longLog
 makuInstall inxi
 log "Installed inxi"
 
@@ -147,8 +147,8 @@ log "Added numlockx and enabled numlock on boot!"
 log "Ending here, but I plan on adding more stuff"
 
 log "Errors:"
-egrep $longLog "rror"
-egrep $log "rror"
-egrep $longLog "arning"
-egrep $log "arning"
+egrep -i "error" $longLog
+egrep -i "error" $log
+egrep -i "warning" $longLog
+egrep -i "warning" $log
 log "End errors"

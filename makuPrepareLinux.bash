@@ -108,10 +108,6 @@ makuInstall compizconfig-settings-manager
 makuInstall compiz-plugins
 log "Installed compizConfig! You still need to import your profile."
 
-log "Importing compizConfig settings..."
-sudo -u $USER python /tmp/makuLinuxStartTemp/importCompiz.py '/tmp/makuLinuxStartTemp/compizSettings.profile'
-	#So, it worked when I used this code alone, but it's not working in the script...
-log "Imported compizConfig settings!"
 
 log "Cleaning up launcher..."
 sudo -u $USER gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']" >> $longLog
@@ -127,6 +123,11 @@ log "Adding numlockx and enabling numlock on boot..."
 makuInstall numlockx
 sudo sed -i 's|^exit 0.*$|# Numlock enable\n[ -x /usr/bin/numlockx ] \&\& numlockx on\n\nexit 0|' /etc/rc.local >> $longLog
 log "Added numlockx and enabled numlock on boot!"
+
+log "Importing compizConfig settings..."
+sudo -u $USER python /tmp/makuLinuxStartTemp/importCompiz.py '/tmp/makuLinuxStartTemp/compizSettings.profile'
+	#So, it worked when I used this code alone, but it's not working in the script...
+log "Imported compizConfig settings!"
 
 log "Ending here, but I plan on adding more stuff"
 

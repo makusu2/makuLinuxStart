@@ -51,13 +51,14 @@ makuLongInstall ()
 	programs = "vim sublime-text vlc chromium-browser inxi"
 }
 
-if [ $EUID != 0 ]; then
-	#if not root
-	log "User is not root, attempting to run as root..."
-	sudo "$0" "$@"
-	#Run current script as root
-	exit $?
-	#Then exit this one (With the root one running)
+ if [ $EUID == 0 ]; then
+	echo "YOU CANNOT RUN AS ROOT"
+	# #if not root
+	# log "User is not root, attempting to run as root..."
+	# sudo "$0" "$@"
+	# #Run current script as root
+	# exit $?
+	# #Then exit this one (With the root one running)
 fi
 
 set -e

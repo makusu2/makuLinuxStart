@@ -49,9 +49,9 @@ log "Made apt-get wait for lock"
 
 
 log "Checking for updates..."
-sudo apt-get upgrade -y >> $longLog
-log "Attempting updates..."
 sudo apt-get update -y >> $longLog
+log "Attempting updates..."
+sudo apt-get upgrade -y >> $longLog
 
 log "Setting Git properties..."
 git config --global user.name "Maku" >> $longLog
@@ -123,16 +123,14 @@ makuInstall numlockx
 sudo sed -i 's|^exit 0.*$|# Numlock enable\n[ -x /usr/bin/numlockx ] \&\& numlockx on\n\nexit 0|' /etc/rc.local >> $longLog
 log "Added numlockx and enabled numlock on boot!"
 
-log "Importing compizConfig settings..."
-python /tmp/makuLinuxStartTemp/importCompiz.py '/tmp/makuLinuxStartTemp/compizSettings.profile'
-	#So, it worked when I used this code alone, but it's not working in the script...
-log "Imported compizConfig settings!"
+# log "Importing compizConfig settings..."
+# python /tmp/makuLinuxStartTemp/importCompiz.py '/tmp/makuLinuxStartTemp/compizSettings.profile'
+	# #So, it worked when I used this code alone, but it's not working in the script...
+# log "Imported compizConfig settings!"
+
+log "Performing updates and upgrades again..."
+sudo apt-get update -y >> $longLog
+sudo apt-get upgrade -y >> $longLog
+log "Performed updates and upgrades again
 
 log "Ending here, but I plan on adding more stuff"
-
-# log "Errors:" #It's not continuing though... uh.
-# egrep -i "error" $longLog
-# egrep -i "error" $log
-# egrep -i "warning" $longLog
-# egrep -i "warning" $log
-# log "End errors"

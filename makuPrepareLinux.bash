@@ -112,7 +112,7 @@ log "Installed compizConfig! You still need to import your profile."
 
 log "Cleaning up launcher..."
 gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']" >> $longLog
-log "Cleaned up launcher! (Reboot necessary)"
+log "Cleaned up launcher! (Reboot may be necessary)"
 
 log "Adding aliases..."
 sudo echo 'alias snip="gnome-screenshot -ac"' >> ~/.bash_aliases
@@ -131,6 +131,6 @@ log "Added numlockx and enabled numlock on boot!"
 log "Performing updates and upgrades again..."
 sudo apt-get update -y >> $longLog
 sudo apt-get upgrade -y >> $longLog
-log "Performed updates and upgrades again
+log "Performed updates and upgrades again"
 
 log "Ending here, but I plan on adding more stuff"

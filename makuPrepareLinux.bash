@@ -2,7 +2,7 @@
 #Steven
 #Maku
 #If permission denied, do chmod +x makuPrepareLinux.bash
-#Todo: Make output quieter, use aptdcon
+#Todo: Make output quieter
 #Requirements: Git installed
 log ()
 {
@@ -59,6 +59,10 @@ if [ $EUID != 0 ]; then
 	exit $?
 	#Then exit this one (With the root one running)
 fi
+
+set -e
+	#Making code exit on error
+
 log "User is root"
 log "Checking for updates..."
 sudo apt-get upgrade -y

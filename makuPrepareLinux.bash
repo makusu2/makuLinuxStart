@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #Steven
 #Maku
-#Todo: Make output quieter, edit boot settings (like grub timeout), use an actual logging daemon, make code neater, add server switch to install openssh-server
+#Todo: Make output quieter, edit boot settings (like grub timeout), use an actual logging daemon, make code neater, add server switch to install openssh-server, make it not quit on failed installation, 
 #If permission denied, do chmod +x makuPrepareLinux.bash
 #Also do one for Windows
 #Requirements: Git installed
@@ -145,9 +145,9 @@ log "Installed LaTeX!"
 
 log "     Installations complete"
 
-log "Changing boot settings..."
-grubFile='/etc/default/grub'
-grep -i 'GRUB_DEFAULT='
+#log "Changing boot settings..."
+#grubFile='/etc/default/grub'
+#grep -i 'GRUB_DEFAULT='
 
 
 

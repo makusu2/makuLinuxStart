@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #Steven
 #Maku
-#Todo: Make output quieter, edit boot settings (like grub timeout), use an actual logging daemon, make code neater
+#Todo: Make output quieter, edit boot settings (like grub timeout), use an actual logging daemon, make code neater, add server switch to install openssh-server
 #If permission denied, do chmod +x makuPrepareLinux.bash
 #Also do one for Windows
 #Requirements: Git installed
@@ -142,12 +142,6 @@ log "Installed Grace!"
 log "Installing LaTeX..."
 makuInstall texlive-latex-base
 log "Installed LaTeX!"
-
-log "Installing ClipGrab..."
-sudo apt-add-repository -y ppa:clipgrab-team/ppa > /dev/null 2>&1
-sudo apt-get -y update >> $longLog
-makuInstall clipgrab
-log "Installed ClipGrab!"
 
 log "     Installations complete"
 

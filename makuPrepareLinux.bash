@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 #Steven
 #Maku
+#Todo: Make output quieter, edit boot settings (like grub timeout), use an actual logging daemon, make code neater
 #If permission denied, do chmod +x makuPrepareLinux.bash
-#Todo: Make output quieter
+#Also do one for Windows
 #Requirements: Git installed
 log ()
 {
@@ -25,12 +26,6 @@ makuInstall()
 
  if [ $EUID == 0 ]; then
 	echo "YOU CANNOT RUN AS ROOT"
-	# #if not root
-	# log "User is not root, attempting to run as root..."
-	# sudo "$0" "$@"
-	# #Run current script as root
-	# exit $?
-	# #Then exit this one (With the root one running)
 fi
 
 set -e
@@ -58,7 +53,15 @@ git config --global user.name "Maku" >> $longLog
 git config --global user.email "makusu2@gmail.com" >> $longLog
 log "Git properties set!"
 
-
+log "Testing for vmware..."
+if (grep -q ^flags.*\ hypervisor /proc/cpuinfo) then
+	log "Device is a VM, installing VMWareTools..."
+	makuInstall open-vm-tools
+	log "VMWareTools installed!"
+else
+	log "Device is not a VM"
+fi
+	
 
 
 
@@ -72,6 +75,10 @@ log "Installing the ultimate VimRC..."
 git clone -q --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime >> $longLog
 sh ~/.vim_runtime/install_awesome_vimrc.sh >> $longLog
 log "Installed the ultimate VimRC!"
+
+log "Adding line numbers to Vim..."
+echo "set number" >> ~/.vimrc
+log "Added line numbers to Vim"
 
 log "Installing Sublime Text..."
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
@@ -93,10 +100,15 @@ log "Installing Chromium..."
 makuInstall chromium-browser
 log "Installed Chromium!"
 
+log "Setting Chromium as default browser..."
+sudo sed -i 's/gedit/sublime_text/g' /usr/share/applications/defaults.list >> $longLog
+#Should work? Dunno
+log "Set Chromium as default browser!"
+
 log "Installing inxi..."
 sudo add-apt-repository -y ppa:unit193/inxi > /dev/null 2>&1
 	#The 2>&1 thing means "if it's an error, DO print to terminal"
-sudo apt-get update >> $longLog
+sudo apt-get -y update >> $longLog
 makuInstall inxi
 log "Installed inxi"
 
@@ -117,10 +129,31 @@ log "Installing Audacity..."
 makuInstall audacity
 log "Installed Audacity!"
 
+log "Installing Steam..."
+sudo add-apt-repository -y multiverse > /dev/null 2>&1
+sudo apt-get -y update >> $longLog
+makuInstall steam
+log "Instaled Steam!"
+
+log "Installing Grace..."
+makuInstall grace
+log "Installed Grace!"
+
+log "Installing LaTeX..."
+makuInstall texlive-latex-base
+log "Installed LaTeX!"
+
+log "Installing ClipGrab..."
+sudo apt-add-repository -y ppa:clipgrab-team/ppa > /dev/null 2>&1
+sudo apt-get -y update >> $longLog
+makuInstall clipgrab
+log "Installed ClipGrab!"
+
 log "     Installations complete"
 
-
-
+log "Changing boot settings..."
+grubFile='/etc/default/grub'
+grep -i 'GRUB_DEFAULT='
 
 
 

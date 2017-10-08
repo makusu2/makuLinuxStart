@@ -19,6 +19,7 @@
 #		Nah that just looks like a gui instad of command line
 #	Make python default to python3 instead of python2
 #		Nah actually dont
+#	Git keeps asking for credentials; fix that
 
 #If permission denied, do chmod +x makuPrepareLinux.bash
 #Also do one for Windows
@@ -99,6 +100,7 @@ performInstallations()
 	makuInstall vim
 	makuInstall texlive-latex-base
 	makuInstall grace
+	makuInstall pip3
 
 	echo "     Installations complete!"
 
@@ -121,7 +123,7 @@ postInstallations()
 
 
 	echo "Cleaning up launcher..."
-	gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']" >> $longLog
+	gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']"
 	echo "Cleaned up launcher! (Reboot may be necessary)"
 
 	echo "Adding aliases..."

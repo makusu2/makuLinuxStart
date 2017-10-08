@@ -1,25 +1,25 @@
 #!/usr/bin/env bash
 #Steven
 #Maku
-'''
-Todo: 
-	Make output quieter
-	edit boot settings (like grub timeout)
-	use an actual logging daemon
-		Or dont? It actually doesnt look easy
-	make code neater
-	Switches:
-		server: Install openssh-server
-		verbose: Redirect to log but also to terminal
-		silent: Dont print to terminal at all
-	make it not quit on failed installation
-		Done I think? But now make it ask user if it should continue MAYBE
-	make sublime-text close on last tab closing
-	Maybe replace inxi with hardinfo?
-		Nah that just looks like a gui instad of command line
-	Make python default to python3 instead of python2
-		Nah actually dont
-'''
+
+#Todo: 
+#	Make output quieter
+#	edit boot settings (like grub timeout)
+#	use an actual logging daemon
+#		Or dont? It actually doesnt look easy
+#	make code neater
+#	Switches:
+#		server: Install openssh-server
+#		verbose: Redirect to log but also to terminal
+#		silent: Dont print to terminal at all
+#	make it not quit on failed installation
+#		Done I think? But now make it ask user if it should continue MAYBE
+#	make sublime-text close on last tab closing
+#	Maybe replace inxi with hardinfo?
+#		Nah that just looks like a gui instad of command line
+#	Make python default to python3 instead of python2
+#		Nah actually dont
+
 #If permission denied, do chmod +x makuPrepareLinux.bash
 #Also do one for Windows
 #Requirements: Git installed
@@ -77,6 +77,12 @@ performInstallations()
 	makuInstall sublime-text
 	echo "Installed Sublime Text!"
 
+	echo "Installing Steam..."
+	sudo add-apt-repository -y multiverse > /dev/null 2>&1
+	updateUpgrade
+	makuInstall steam
+	echo "Installed Steam!"
+
 
 	sudo add-apt-repository -y ppa:unit193/inxi > /dev/null 2>&1
 		#The 2>&1 thing means "if it's an error, DO print to terminal"
@@ -93,12 +99,6 @@ performInstallations()
 	makuInstall vim
 	makuInstall texlive-latex-base
 	makuInstall grace
-
-	echo "Installing Steam..."
-	sudo add-apt-repository -y multiverse > /dev/null 2>&1
-	updateUpgrade
-	makuInstall steam
-	echo "Instaled Steam!"
 
 	echo "     Installations complete!"
 

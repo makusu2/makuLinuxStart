@@ -72,7 +72,7 @@ performInstallations()
 
 	echo "Installing Sublime Text..."
 	wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
-	echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list >> $longLog
+	echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
 	updateUpgrade
 	makuInstall sublime-text
 	echo "Installed Sublime Text!"
@@ -130,7 +130,7 @@ postInstallations()
 
 	echo "Adding numlockx and enabling numlock on boot..."
 	makuInstall numlockx
-	sudo sed -i 's|^exit 0.*$|# Numlock enable\n[ -x /usr/bin/numlockx ] \&\& numlockx on\n\nexit 0|' /etc/rc.local >> $longLog
+	sudo sed -i 's|^exit 0.*$|# Numlock enable\n[ -x /usr/bin/numlockx ] \&\& numlockx on\n\nexit 0|' /etc/rc.local
 	echo "Added numlockx and enabled numlock on boot!"
 
 	echo "Adding line numbers to Vim..."
@@ -202,4 +202,4 @@ touch $log
 
 sudo chown $USER $log
 #sudo chown $USER $longLog
-main >> $log
+main >> $log 2>&1

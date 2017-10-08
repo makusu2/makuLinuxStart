@@ -1,7 +1,17 @@
 #!/usr/bin/env bash
 #Steven
 #Maku
-#Todo: Make output quieter, edit boot settings (like grub timeout), use an actual logging daemon, make code neater, add server switch to install openssh-server, make it not quit on failed installation, 
+'''Todo: 
+	Make output quieter
+	edit boot settings (like grub timeout)
+	use an actual logging daemon
+	make code neater
+	add server switch to install openssh-server
+	make it not quit on failed installation
+	make sublime-text close on last tab closing
+	Maybe replace inxi with hardinfo?
+	Make python default to python3 instead of python2
+'''
 #If permission denied, do chmod +x makuPrepareLinux.bash
 #Also do one for Windows
 #Requirements: Git installed

@@ -3,38 +3,13 @@
 #Maku
 
 #Todo:
-#	Make output quieter
 #	edit boot settings (like grub timeout)
-#	use an actual logging daemon
-#		Or dont? It actually doesnt look easy
-#	make code neater
 #	Switches:
 #		server: Install openssh-server
 #		verbose: Redirect to log but also to terminal
 #		silent: Dont print to terminal at all
-#	make it not quit on failed installation
-#		Done I think? But now make it ask user if it should continue MAYBE
-#	make sublime-text close on last tab closing
-#	Maybe replace inxi with hardinfo?
-#		Nah that just looks like a gui instad of command line
 #Disable autocomplete on atom
-#	Actually don't
-#make Atom default text editor
-#Maybe don't do compizconfig, maybe do unity-tweak-tool or nothing
-
-
-#If permission denied, do chmod +x makuPrepareLinux.bash
-#Also do one for Windows
-#Requirements: Git installed
-#log ()
-# {
-#	log=/var/tmp/log/makuPrepareLinusublxLog.log
-#	#sudo touch $log
-#	date=`date '+%Y-%m-%d %H:%M:%S'`
-#	logMessage="$1"
-#	echo "$date $logMessage" >> $log
-#	echo " $logMessage"
-#}
+#	Actually don't; just make enter not activate it
 
 makuInstall()
 {
@@ -216,13 +191,15 @@ if [ $EUID == 0 ]; then
 	echo "YOU CANNOT RUN AS ROOT"
 fi
 
-#set -e
-	#Making code exit on error
-
 mkdir -p /var/tmp/log
 log=/var/tmp/log/makuPrepareLinuxLog.log
-#longLog=/var/tmp/log/makuPrepareLinuxLongLog.log
 touch $log
+
+silent=$false
+assumeYes=$true
+verbose=$false
+
+#Edit these once you know how to do Switches
 
 sudo chown $USER $log
 #sudo chown $USER $longLog

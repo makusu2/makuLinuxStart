@@ -2,7 +2,7 @@
 #Steven
 #Maku
 
-#Todo: 
+#Todo:
 #	Make output quieter
 #	edit boot settings (like grub timeout)
 #	use an actual logging daemon
@@ -17,16 +17,18 @@
 #	make sublime-text close on last tab closing
 #	Maybe replace inxi with hardinfo?
 #		Nah that just looks like a gui instad of command line
-#	Make python default to python3 instead of python2
-#		Nah actually dont
-#	Git keeps asking for credentials; fix that
+#Disable autocomplete on atom
+#	Actually don't
+#make Atom default text editor
+#Maybe don't do compizconfig, maybe do unity-tweak-tool or nothing
+
 
 #If permission denied, do chmod +x makuPrepareLinux.bash
 #Also do one for Windows
 #Requirements: Git installed
 #log ()
 # {
-#	log=/var/tmp/log/makuPrepareLinuxLog.log
+#	log=/var/tmp/log/makuPrepareLinusublxLog.log
 #	#sudo touch $log
 #	date=`date '+%Y-%m-%d %H:%M:%S'`
 #	logMessage="$1"
@@ -78,6 +80,10 @@ performInstallations()
 	makuInstall sublime-text
 	echo "Installed Sublime Text!"
 
+	sudo add-apt-repository ppa:webupd8team/atom
+	updateUpgrade
+	makuInstall atom
+
 	echo "Installing Steam..."
 	sudo add-apt-repository -y multiverse > /dev/null 2>&1
 	updateUpgrade
@@ -90,8 +96,9 @@ performInstallations()
 	updateUpgrade
 	makuInstall inxi
 
-	makuInstall compizconfig-settings-manager
-	makuInstall compiz-plugins
+	#makuInstall compizconfig-settings-manager
+	#makuInstall compiz-plugins
+	#makuInstall ccsm
 	makuInstall gfortran
 	makuInstall gimp
 	makuInstall audacity
@@ -101,6 +108,7 @@ performInstallations()
 	makuInstall texlive-latex-base
 	makuInstall grace
 	makuInstall pip3
+	makuInstall hardinfo
 
 	echo "     Installations complete!"
 
@@ -110,8 +118,17 @@ postInstallations()
 	echo "Setting Git properties..."
 	git config --global user.name "Maku"
 	git config --global user.email "makusu2@gmail.com"
+	git config credential.helper store
 	echo "Git properties set!"
 
+	echo "Installing important pip3 modules..."
+	sudo -H pip3 install compizconfig
+	sudo -H pip3 install discord
+	echo "Installed important pip3 modules"
+
+	echo "Importing atom settings..."
+	cp -f /tmp/makuLinuxStartTemp/atomConfig.cson ~/.atom/config.cson
+	echo "Imported atom settings"
 
 	echo "Disabling terminal case sensitivity..."
 	# If ~./inputrc doesn't exist yet, first include the original /etc/inputrc so we don't override it
@@ -139,10 +156,15 @@ postInstallations()
 	echo "set number" >> ~/.vimrc
 	echo "Added line numbers to Vim"
 
-	echo "Setting Sublime Text as default editor..."
-	sudo sed -i 's/gedit/sublime_text/g' /usr/share/applications/defaults.list
+	#echo "Setting Sublime Text as default editor..."
+	#sudo sed -i 's/gedit/sublime_text/g' /usr/share/applications/defaults.list
 		#Replacing all instances of "gedit" with "sublime_text" in the defaults file
-	echo "Set Sublime Text as default editor!"
+	#echo "Set Sublime Text as default editor!"
+
+	echo "Setting atom as default editor..."
+	echo 'export EDITOR="/usr/bin/atom"' >> ~/.bashrc
+	source ~/.bashrc
+	echo "Set atom as default editor"
 
 	echo "Setting Chromium as default browser..."
 	sudo sed -i 's/firefox/chromium/g' /usr/share/applications/defaults.list
@@ -168,9 +190,9 @@ postInstallations()
 }
 updateUpgrade()
 {
-	echo "Checking for updates..."
+	echo "     Checking for updates..."
 	sudo apt-get update -y
-	echo "Attempting updates..."
+	echo "     Attempting updates..."
 	sudo apt-get upgrade -y
 
 }
@@ -189,14 +211,14 @@ main()
 	echo "     Changing settings complete"
 
 }
- 
+
 if [ $EUID == 0 ]; then
 	echo "YOU CANNOT RUN AS ROOT"
 fi
 
 #set -e
 	#Making code exit on error
-	
+
 mkdir -p /var/tmp/log
 log=/var/tmp/log/makuPrepareLinuxLog.log
 #longLog=/var/tmp/log/makuPrepareLinuxLongLog.log

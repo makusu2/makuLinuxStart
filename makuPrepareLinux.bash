@@ -102,7 +102,8 @@ postInstallations()
 	echo "Installed important pip3 modules"
 
 	echo "Importing atom settings..."
-	cp -f /tmp/makuLinuxStartTemp/atomConfig.cson ~/.atom/config.cson
+  mkdir -p ~/.atom/
+	sudo -H cp -fr /tmp/makuLinuxStartTemp/atomConfig.cson ~/.atom/config.cson
 	echo "Imported atom settings"
 
 	echo "Disabling terminal case sensitivity..."

@@ -10,6 +10,7 @@
 #		silent: Dont print to terminal at all
 #Disable autocomplete on atom
 #	Actually don't; just make enter not activate it
+#Make chromium automatically ask for user/pass and load addons and extensions
 
 makuInstall()
 {
@@ -55,7 +56,7 @@ performInstallations()
 	makuInstall sublime-text
 	echo "Installed Sublime Text!"
 
-	sudo add-apt-repository ppa:webupd8team/atom
+	sudo add-apt-repository -y ppa:webupd8team/atom
 	updateUpgrade
 	makuInstall atom
 
@@ -66,8 +67,7 @@ performInstallations()
 	echo "Installed Steam!"
 
 
-	sudo add-apt-repository -y ppa:unit193/inxi > /dev/null 2>&1
-		#The 2>&1 thing means "if it's an error, DO print to terminal"
+	sudo add-apt-repository -y ppa:unit193/inxi
 	updateUpgrade
 	makuInstall inxi
 

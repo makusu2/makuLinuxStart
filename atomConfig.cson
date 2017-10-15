@@ -1,11 +1,13 @@
 "*":
+  "autocomplete-plus":
+    confirmCompletion: "tab"
   core:
     closeDeletedFileTabs: true
     restorePreviousWindowsOnStart: "no"
     telemetryConsent: "limited"
   editor:
     fontSize: 10
-    tabType: "hard"
+    tabType: "soft"
   "exception-reporting":
     userId: "453db0bc-63e6-4aa9-b89e-5410c98448be"
   welcome:
